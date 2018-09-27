@@ -15,8 +15,10 @@ const addPlace = (state, action) => {
       // image: {
       //   uri: 'https://images.unsplash.com/photo-1449312605762-1df9d89ee6b7?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&s=2ff905f2786e370a548ce8141fb0b5e0'
       // }
-      image: placeImg,
-      location: action.location
+      image: {
+        uri: action.image.uri
+      },
+      location: action.location,
     })
   };
 };
