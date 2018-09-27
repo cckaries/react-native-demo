@@ -61,3 +61,6 @@ buck-out/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# API keys
+keys.xml
