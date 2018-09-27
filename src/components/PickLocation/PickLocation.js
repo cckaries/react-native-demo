@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Button, Dimensions } from 'react-native';
-// import MapView from 'react-native-maps';
+import MapView from 'react-native-maps';
 
 export default class PickLocation extends Component {
   state = {
@@ -29,21 +29,14 @@ export default class PickLocation extends Component {
   }
 
   render() {
-    // return (
-    //   <View style={styles.container}>
-    //     <MapView
-    //       initialRegion={this.state.focusedLocation}
-    //       region={this.state.focusedLocation}
-    //       style={styles.map}
-    //       onPress={this.pickLocationHandler}
-    //     />
-    //     <View style={styles.button}>
-    //       <Button title="Locate Me" onPress={() => alert('location')} />
-    //     </View>
-    //   </View>
-    // );
     return (
       <View style={styles.container}>
+        <MapView
+          initialRegion={this.state.focusedLocation}
+          region={this.state.focusedLocation}
+          style={styles.map}
+          onPress={this.pickLocationHandler}
+        />
         <View style={styles.button}>
           <Button title="Locate Me" onPress={() => alert('location')} />
         </View>
