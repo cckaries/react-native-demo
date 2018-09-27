@@ -10,6 +10,7 @@ import {
   Dimensions
 } from 'react-native';
 import { connect } from 'react-redux';
+import MapView from 'react-native-maps';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import * as actions from '../../stores/actions/index';
@@ -21,11 +22,11 @@ class PlaceDetail extends Component {
 
   constructor(props) {
     super(props);
-    Dimensions.addEventListener('change', this.updateState)
+    Dimensions.addEventListener('change', this.updateState);
   }
 
   componentWillUnmount() {
-    Dimensions.removeEventListener('change', this.updateState)
+    Dimensions.removeEventListener('change', this.updateState);
   }
 
   updateState = dims => {
@@ -61,11 +62,28 @@ class PlaceDetail extends Component {
             : styles.landscapeContainer
         ]}
       >
-        <View style={styles.subContainer}>
-          <Image
-            source={this.props.selectedPlace.image}
-            style={styles.placeImage}
-          />
+        <View style={styles.placeDetailContainer}>
+          <View style={styles.subContainer}>
+            <Image
+              source={this.props.selectedPlace.image}
+              style={styles.placeImage}
+            />
+          </View>
+          <View style={styles.subContainer}>
+            <MapView
+              initialRegion={{
+                ...this.props.selectedPlace.location,
+                latitudeDelta: 0.0122,
+                longitudeDelta:
+                  (Dimensions.get('window').width /
+                    Dimensions.get('window').height) *
+                  0.0122
+              }}
+              style={styles.map}
+            >
+              <MapView.Marker coordinate={this.props.selectedPlace.location} />
+            </MapView>
+          </View>
         </View>
         <View style={styles.subContainer}>
           <View>
@@ -106,7 +124,7 @@ const styles = StyleSheet.create({
   },
   placeImage: {
     width: '100%',
-    height: 200
+    height: '100%'
   },
   placeName: {
     fontWeight: 'bold',
@@ -115,6 +133,12 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     alignItems: 'center'
+  },
+  placeDetailContainer: {
+    flex: 2
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject
   }
 });
 
