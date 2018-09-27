@@ -1,5 +1,7 @@
 apply plugin: "com.android.application"
 
+apply from: "../keys.gradle"
+
 import com.android.build.OutputFile
 
 /**
@@ -116,9 +118,13 @@ android {
         }
     }
     buildTypes {
+        debug {
+            resValue "string", "google_maps_api_key", mapsApiKeyDev // YOUR_GOOGLE_MAPS_API_KEY_DEV
+        }
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            resValue "string", "google_maps_api_key", mapsApiKeyProd // YOUR_GOOGLE_MAPS_API_KEY_PRODUCTION
         }
     }
     // applicationVariants are e.g. debug, release

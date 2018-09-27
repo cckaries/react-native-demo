@@ -63,4 +63,4 @@ buck-out/
 !.vscode/extensions.json
 
 # API keys
-keys.xml
+keys.gradle
