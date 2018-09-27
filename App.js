@@ -1,49 +1,48 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
+import { Navigation } from 'react-native-navigation';
+import { Provider } from 'react-redux';
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import AuthScreen from './src/screens/Auth/Auth';
+import SharePlaceScreen from './src/screens/SharePlace/SharePlace';
+import FindPlaceScreen from './src/screens/FindPlace/FindPlace';
+import configureStore from './src/stores/configureStore';
+import PlaceDetailScreen from './src/screens/PlaceDetail/PlaceDetail';
+import SideDrawer from './src/screens/SideDrawer/SideDrawer';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+const store = configureStore();
 
-type Props = {};
-export default class App extends Component<Props> {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
-    );
+// Register navigation
+Navigation.registerComponent(
+  'test.AuthScreen',
+  () => AuthScreen,
+  store,
+  Provider
+);
+Navigation.registerComponent(
+  'test.SharePlaceScreen',
+  () => SharePlaceScreen,
+  store,
+  Provider
+);
+Navigation.registerComponent(
+  'test.FindPlaceScreen',
+  () => FindPlaceScreen,
+  store,
+  Provider
+);
+
+Navigation.registerComponent(
+  'test.PlaceDetailScreen',
+  () => PlaceDetailScreen,
+  store,
+  Provider
+);
+
+Navigation.registerComponent('test.SideDrawer', () => SideDrawer);
+
+// Start an app
+Navigation.startSingleScreenApp({
+  screen: {
+    screen: 'test.AuthScreen',
+    title: 'Login'
   }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
 });
