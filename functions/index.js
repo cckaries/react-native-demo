@@ -2,9 +2,10 @@ const functions = require('firebase-functions');
 const cors = require('cors')({ origin: true });
 const fs = require('fs');
 const UUID = require('uuid-v4');
+const keys = require('./keys');
 
 const gcconfig = {
-  projectId: 'rn-test-x1',
+  projectId: keys.firebaseProjectId,
   keyFilename: 'rntest.json'
 };
 const { Storage } = require('@google-cloud/storage');
