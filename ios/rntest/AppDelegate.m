@@ -14,11 +14,14 @@
 
 #import <React/RCTRootView.h>
 
+#import <GoogleMaps/GoogleMaps.h>
+#import "keys.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+//  [GMSServices provideAPIKey:@mapsApiKey]; // add this line using the api key obtained from Google Console
   
   NSURL *jsCodeLocation;
 #ifdef DEBUG

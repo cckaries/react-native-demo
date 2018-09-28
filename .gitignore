@@ -64,3 +64,4 @@ buck-out/
 
 # API keys
 keys.gradle
+keys.h
