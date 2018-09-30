@@ -25,34 +25,51 @@ class SharePlaceScreen extends Component {
     navBarButtonColor: 'orange'
   };
 
-  state = {
-    controls: {
-      placeName: {
-        value: '',
-        valid: false,
-        touched: false,
-        validationRules: {
-          notEmpty: true
+  constructor(props) {
+    super(props);
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
+  }
+
+  componentWillMount = () => {
+    this.reset();
+  };
+
+  reset = () => {
+    this.setState({
+      controls: {
+        placeName: {
+          value: '',
+          valid: false,
+          touched: false,
+          validationRules: {
+            notEmpty: true
+          }
+        },
+        location: {
+          value: null,
+          valid: false
+        },
+        image: {
+          value: null,
+          valid: false
         }
-      },
-      location: {
-        value: null,
-        valid: false
-      },
-      image: {
-        value: null,
-        valid: false
       }
+    });
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (this.props.placeAdded) {
+      this.props.navigator.switchToTab({ tabIndex: 0 });
+      this.props.onStartAddPlace();
     }
   };
 
-  constructor(props) {
-    super(props);
-    this.props.navigator.setOnNavigatorEvent(this.setOnNavigatorEvent);
-  }
-
-  setOnNavigatorEvent = e => {
-    console.log(e);
+  onNavigatorEvent = e => {
+    if (e.type === 'ScreenChangedEvent') {
+      if (e.id === 'WillAppear') {
+        this.props.onStartAddPlace();
+      }
+    }
     if (e.type === 'NavBarButtonPress') {
       if (e.id === 'sideDrawerToggle') {
         this.props.navigator.toggleDrawer({
@@ -112,6 +129,9 @@ class SharePlaceScreen extends Component {
       this.state.controls.location.value,
       this.state.controls.image.value
     );
+    this.reset();
+    this.imagePicker.reset();
+    this.locationPicker.reset();
   };
 
   render() {
@@ -138,8 +158,14 @@ class SharePlaceScreen extends Component {
             <MainText>
               <HeadingText>Share a place with us</HeadingText>
             </MainText>
-            <PickImage onImagePicked={this.imagePickedHandler} />
-            <PickLocation onLocationPick={this.locationPickedHandler} />
+            <PickImage
+              onImagePicked={this.imagePickedHandler}
+              ref={ref => (this.imagePicker = ref)}
+            />
+            <PickLocation
+              onLocationPick={this.locationPickedHandler}
+              ref={ref => (this.locationPicker = ref)}
+            />
             <PlaceInput
               placeData={this.state.controls.placeName}
               onChangeText={this.placeNameChangedHandler}
@@ -175,14 +201,16 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    isLoading: state.ui.isLoading
+    isLoading: state.ui.isLoading,
+    placeAdded: statr.places.placeAdded
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onAddPlace: (placeName, location, image) =>
-      dispatch(actions.addPlace(placeName, location, image))
+      dispatch(actions.addPlace(placeName, location, image)),
+    onStartAddPlace: () => dispatch(actions.startAddPlace())
   };
 };
 

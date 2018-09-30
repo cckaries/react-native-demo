@@ -9,8 +9,11 @@ import {
 } from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { connect } from 'react-redux';
 
-export default class SideDrawer extends Component {
+import * as actions from '../../stores/actions/index';
+
+class SideDrawer extends Component {
   static navigatorStyle = {
     navBarButtonColor: 'orange'
   };
@@ -23,10 +26,10 @@ export default class SideDrawer extends Component {
           { width: Dimensions.get('window').width * 0.8 }
         ]}
       >
-        <TouchableOpacity>
+        <TouchableOpacity onPress={this.props.onLogout}>
           <View style={styles.drawerItem}>
             <Ionicons
-              name={Platform.OS === 'android' ? 'md-log-out' : "ios-log-out"}
+              name={Platform.OS === 'android' ? 'md-log-out' : 'ios-log-out'}
               size={30}
               color="#aaa"
               style={styles.drawerItemIcon}
@@ -55,3 +58,14 @@ const styles = StyleSheet.create({
     marginRight: 10
   }
 });
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    onLogout: () => dispatch(actions.authLogout())
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(SideDrawer);

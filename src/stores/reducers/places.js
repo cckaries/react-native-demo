@@ -2,7 +2,8 @@ import * as actionTypes from '../actions/actionTypes';
 import placeImg from '../../assets/img1.jpg';
 
 const initialState = {
-  places: []
+  places: [],
+  placeAdded: false
 };
 
 const addPlace = (state, action) => {
@@ -28,11 +29,24 @@ const removePlace = (state, action) => {
   };
 };
 
-
 const setPlaces = (state, action) => {
   return {
     ...state,
     places: action.places
+  };
+};
+
+const placeAdded = (state, action) => {
+  return {
+    ...state,
+    placeAdded: false
+  }
+}
+
+const startAddPlace = (state, action) => {
+  return {
+    ...state,
+    placeAdded: false
   }
 }
 
@@ -40,12 +54,14 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.ADD_PLACE:
       return addPlace(state, action);
-    // case actionTypes.DELETE_PLACE:
-    //   return deletePlace(state, action);
     case actionTypes.REMOVE_PLACE:
       return removePlace(state, action);
     case actionTypes.SET_PLACES:
       return setPlaces(state, action);
+    case actionTypes.PLACE_ADDED:
+      return placeAdded(state, action);
+    case actionTypes.START_ADD_PLACE:
+      return startAddPlace(state, action);
     default:
       return state;
   }

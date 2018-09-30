@@ -37,12 +37,18 @@ Navigation.registerComponent(
   Provider
 );
 
-Navigation.registerComponent('test.SideDrawer', () => SideDrawer);
+Navigation.registerComponent(
+  'test.SideDrawer',
+  () => SideDrawer,
+  store,
+  Provider
+);
 
 // Start an app
-Navigation.startSingleScreenApp({
-  screen: {
-    screen: 'test.AuthScreen',
-    title: 'Login'
-  }
-});
+export default () =>
+  Navigation.startSingleScreenApp({
+    screen: {
+      screen: 'test.AuthScreen',
+      title: 'Login'
+    }
+  });
