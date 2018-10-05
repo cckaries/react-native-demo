@@ -13,7 +13,7 @@
 	
 ## Firebase
 ### API Key for User Log in / Sign up
-1. An API key is required for user authorization. In **/**, create **keys.js**, and and the following lines:
+1. An API key is required for user authentication. In **/**, create **keys.js**, and and the following lines:
 
 
 	```javascript
